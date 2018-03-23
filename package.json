@@ -1,0 +1,31 @@
+{
+  "name": "ibm_db-issue",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "rebuild": "cd node_modules/ibm_db && sed \"s/UNICODE',/&'DEBUG'/\" binding.gyp > binding.debug.gyp && mv binding.gyp binding.old.gyp && mv binding.debug.gyp binding.gyp && IBM_DB_HOME=$(pwd)/installer/clidriver ../.bin/node-gyp rebuild --IS_DOWNLOADED=true && cd ../../",
+    "deps:start": "./db/start.sh",
+    "deps:stop": "./db/stop.sh",
+    "test": "npm run deps:start && npm run test:only && npm run deps:stop",
+    "docker:run": "docker build -t t . && docker run --network=\"ibmdbissue_default\" -v $(pwd)/test:/opt/app/test:ro -w /opt/app t",
+    "test:only:docker": "mocha --timeout 10000 './test/**/*.spec.js'",
+    "test:only": "npm run docker:run -- npm run test:only:docker"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamcdonald/ibm_db-issue.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iamcdonald/ibm_db-issue/issues"
+  },
+  "homepage": "https://github.com/iamcdonald/ibm_db-issue#readme",
+  "dependencies": {
+    "ibm_db": "^2.2.1"
+  },
+  "devDependencies": {
+    "mocha": "^5.0.5",
+    "node-gyp": "^3.6.2"
+  }
+}

@@ -1,0 +1,10 @@
+version: "3"
+services:
+  poll_db:
+    build: ./db-poll
+    command: db2 50000
+  db2:
+    build:
+      context: ./db2
+    ports:
+      - "11111:50000"
