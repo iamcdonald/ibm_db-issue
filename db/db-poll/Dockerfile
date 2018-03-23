@@ -1,4 +1,4 @@
-FROM combined-registry.sbx.zone/multicloud/netcat
+FROM multicloud/netcat
 
 ADD ./poll.sh /
 
