@@ -10,7 +10,7 @@ It isn't always the same error but it will, a majority of the time, cause the no
 
 `npm run test` will
 - create and start a db2 database with a single table in it with a auto generated id column and a blob field;
-- run a test within another docker container running node 8 against this db with both debug settings on (node and bindings).
+- run the tests within another docker container running node 8 against this db with both debug settings on (node and bindings).
 - stop the db2 instance
 
 `npm run deps:start`
@@ -20,4 +20,9 @@ It isn't always the same error but it will, a majority of the time, cause the no
 - stop the db2 container mentioned above
 
 `npm run test:only`
-- re-run the tests above in a node 8 docker container against the db2 container
+- run the test showing memory issue with small string
+- ran in a node 8 docker container against the db2 container
+
+`npm run test:file:only`
+- run the test showing potentially related memory issue with a larger base64 string generated from a file
+- ran in a node 8 docker container against the db2 container

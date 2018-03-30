@@ -1,7 +1,7 @@
 const data = require('./data');
 
 const INSERT_BLOB = `
-  INSERT INTO DB.DUMMY
+  INSERT INTO DUMMY
   (DATA) VALUES (?)
 `;
 
