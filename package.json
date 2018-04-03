@@ -8,10 +8,12 @@
     "deps:stop": "./db/stop.sh",
     "test": "npm run deps:start && npm run test:only && npm run test:file:only && npm run deps:stop",
     "docker:run": "docker build -t t . && docker run --network=\"ibmdbissue_default\" -v $(pwd)/test:/opt/app/test:ro -w /opt/app t",
-    "test:only:docker": "mocha --timeout 10000 './test/test.spec.js'",
-    "test:only": "npm run docker:run -- npm run test:only:docker",
-    "test:file:only:docker": "mocha --timeout 10000 './test/test.file.spec.js'",
-    "test:file:only": "npm run docker:run -- npm run test:file:only:docker"
+    "test:only:base": "mocha --timeout 10000 './test/test.spec.js'",
+    "test:only:host": "HOST=192.168.99.100 PORT=11111 npm run test:only:base",
+    "test:only:linux": "npm run docker:run -- npm run test:only:base",
+    "test:file:only:base": "mocha --timeout 10000 './test/test.file.spec.js'",
+    "test:file:only:linux": "npm run docker:run -- npm run test:file:only:base",
+    "test:file:only:host": "HOST=192.168.99.100 PORT=11111 npm run test:file:only:base"
   },
   "repository": {
     "type": "git",

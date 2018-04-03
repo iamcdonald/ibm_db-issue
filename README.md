@@ -6,6 +6,27 @@ Upon trying to persist some data-sets to a BLOB field within a db2 database vari
 
 It isn't always the same error but it will, a majority of the time, cause the node process to abort.
 
+## Further investigation
+I've now run this against db2 in docker and an actual db2 instance
+I've also ran the tests ( and thus the inserts) on linux (via docker container) and mac.
+
+|Host OS -> DB2                   |Error Seen        |
+|---------                        |-----------       |
+|linux -> docker db2              |&#x2713;          |
+|linux -> actual db2 instance     |&#x2713;          |
+|mac -> docker db2                |&#x2717;          |
+|mac -> actual db2  instance      |&#x2717;          |
+
+The above would suggest that it's something specifically to do with running on linux as running the same inserts via mac don't exhibit the same problems.
+
+I've added test commands to be able to run the tests against different db2 instances   
+- `npm run test:...:linux` will run the tests in a docker container   
+- `npm run test:...:host` will run the tests on whatever host is currently getting used
+
+`HOST` and `PORT` of db2 you wish to run the tests against can be specified as environment variables as can be seen in the `package.json`.
+
+Obviously this still relies on all db2 instances (docker or otherwise being set up with the same tables etc.). This can be found in `db/db2/container/provision.sql`;
+
 # Commands
 
 `npm run test` will
@@ -19,10 +40,22 @@ It isn't always the same error but it will, a majority of the time, cause the no
 `npm run deps:stop`
 - stop the db2 container mentioned above
 
-`npm run test:only`
+## Issues seem to show when running on Linux
+
+`npm run test:only:linux` - run on linux via docker container
 - run the test showing memory issue with small string
 - ran in a node 8 docker container against the db2 container
 
-`npm run test:file:only`
+`npm run test:file:only:linux` - run on linux via docker container
 - run the test showing potentially related memory issue with a larger base64 string generated from a file
+- ran in a node 8 docker container against the db2 container
+
+## They don't show on host machine (Mac, potentially Windows as well although I haven't had access to try)
+
+`npm run test:only:host` - run on host machine
+- run the test showing memory issue with small string - no memory issue evident
+- ran in a node 8 docker container against the db2 container
+
+`npm run test:file:only:host` - run on host machine
+- run the test showing potentially related memory issue with a larger base64 string generated from a file - no memory issue evident
 - ran in a node 8 docker container against the db2 container
