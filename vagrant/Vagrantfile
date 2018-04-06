@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/trusty64"
+
+  config.vm.synced_folder "../", "/data"
+
+  config.vm.provider "virtualbox" do |vb|
+      vb.cpus = "2"
+      vb.memory = "3072"
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    cd /vagrant/provision
+
+    # Install DB2
+    sudo sh install-db2.sh
+
+    # Install Node.js
+    sudo sh install-nodejs.sh
+
+    # Install Application
+    sudo sh install-app.sh
+
+    # Run application
+    sh run-app.sh
+
+    # Shutdown
+    shutdown -h now      
+  SHELL
+end
+  

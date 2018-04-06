@@ -1,2 +1,4 @@
 node_modules
-npm-debug.log
+*.log
+.vagrant/
+vagrant/provision/db2/v*.tar.gz
