@@ -1,10 +1,12 @@
 const ibmdb = require('ibm_db');
 ibmdb.debug(true);
 
+const DBUID = process.env.DBUID || 'db2inst1';
+const DBPWD = process.env.DBPWD || 'cptdevpw';
 const HOST = process.env.HOST || 'db2';
 const PORT = process.env.PORT || '50000';
 
-const CONNECTION_STRING = `DATABASE=DB;CURRENTSCHEMA=DB;UID=db2inst1;PWD=cptdevpw;HOSTNAME=${HOST};PORT=${PORT};DRIVER={DB2};PROTOCOL=TCPIP`;
+const CONNECTION_STRING = `DATABASE=DB;CURRENTSCHEMA=DB;UID=${DBUID};PWD=${DBPWD};HOSTNAME=${HOST};PORT=${PORT};DRIVER={DB2};PROTOCOL=TCPIP`;
 
 const execute = async (query, params) =>
 	new Promise((resolve, reject) => {

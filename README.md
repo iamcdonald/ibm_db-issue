@@ -59,3 +59,12 @@ Obviously this still relies on all db2 instances (docker or otherwise being set 
 `npm run test:file:only:host` - run on host machine
 - run the test showing potentially related memory issue with a larger base64 string generated from a file - no memory issue evident
 - ran in a node 8 docker container against the db2 container
+
+## Vagrant
+To spin up in Vagrant:
+
+- Download IBM DB2 for Linux 64-bit to `vagrant/provision/db2/v11.1_linuxx64_dec_tar.gz`.  If the filename is different update `DB2EXPRESSC_INSTFILE` in `vagrant/provision/install-db2.sh`
+- `cd vagrant`
+- `vagrant up`
+
+This will provision an Ubuntu 14.04 VM with DB2 Express C and Node 8, then copy the application files over and run the tests against the local DB2 server.
